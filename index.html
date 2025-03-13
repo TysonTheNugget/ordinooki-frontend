@@ -115,7 +115,7 @@
         #mint-message {
             margin-top: 20px;
             font-size: 1em;
-            color: #ff0000;
+            color: #00FF00; /* Changed to green */
             font-weight: bold;
             border: 2px groove #000000;
             padding: 5px;
@@ -150,7 +150,7 @@
             text-align: center;
         }
         .popup-content {
-            color: #ff0000;
+            color: #00FF00; /* Changed to green */
             font-family: 'Comic Sans MS', cursive;
             font-size: 2em;
             text-shadow: 2px 2px #000000;
@@ -404,7 +404,7 @@
                     console.log('Request was aborted, ready for next check');
                 }
             } finally {
-                // Show button and hide loading icon, remove old spinner logic
+                // Show button and hide loading icon
                 checkButton.style.display = 'block';
                 loadingIcon.style.display = 'none';
                 activeController = null;
