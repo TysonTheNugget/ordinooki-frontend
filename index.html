@@ -105,16 +105,11 @@
             border-radius: 8px;
             box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
-        .inscription-item p {
-            margin: 5px 0;
-            font-size: 0.9em;
-            color: #ff0000;
-            border-bottom: 1px dashed #000000;
-        }
+        /* Removed .inscription-item p CSS since we won't use it */
         #mint-message {
             margin-top: 20px;
             font-size: 1em;
-            color: #00FF00; /* Already green */
+            color: #00FF00;
             font-weight: bold;
             border: 2px groove #000000;
             padding: 5px;
@@ -130,7 +125,7 @@
         }
         .checkmark {
             font-size: 1.5em;
-            color: #00FF00; /* Changed to green */
+            color: #00FF00;
             margin-left: 10px;
         }
         .popup-success {
@@ -148,18 +143,19 @@
             text-align: center;
         }
         .popup-content {
-            color: #00FF00; /* Already green */
+            color: #00FF00;
             font-family: 'Comic Sans MS', cursive;
             font-size: 2em;
             text-shadow: 2px 2px #000000;
         }
         .popup-checkmark {
             font-size: 4em;
-            color: #00FF00; /* Changed to green */
+            color: #00FF00;
             margin-top: 10px;
             display: inline-block;
             animation: bounceIn 0.8s ease-out;
         }
+       <<<HEAD
         .popup-failure {
             display: none;
             position: fixed;
@@ -212,7 +208,6 @@
             button { font-size: 0.9em; padding: 6px 12px; }
             #result { font-size: 1em; }
             .inscription-item img { width: 100px; height: 100px; }
-            .inscription-item p { font-size: 0.8em; }
             .checkmark { font-size: 1.2em; }
             .popup-content { font-size: 1.5em; }
             .popup-checkmark { font-size: 3em; }
@@ -339,11 +334,11 @@
                 if (tokens.length > 0) {
                     const ownershipText = document.createElement('span');
                     ownershipText.textContent = `You own ${tokens.length} Ordinookis inscription(s)!`;
-                    ownershipText.style.color = '#00FF00'; // Set to green
+                    ownershipText.style.color = '#00FF00';
                     
                     const checkmark = document.createElement('span');
                     checkmark.textContent = '✔';
-                    checkmark.className = 'checkmark'; // Already green in CSS
+                    checkmark.className = 'checkmark';
                     
                     resultDiv.appendChild(ownershipText);
                     resultDiv.appendChild(checkmark);
@@ -359,11 +354,7 @@
                         img.src = `https://static.unisat.io/content/${token.id}`;
                         img.alt = `Inscription #${token.inscriptionNumber}`;
 
-                        const number = document.createElement('p');
-                        number.textContent = `#${token.inscriptionNumber}`;
-
-                        item.appendChild(img);
-                        item.appendChild(number);
+                        item.appendChild(img); // Only append the image, no number
                         gallery.appendChild(item);
                     });
 
