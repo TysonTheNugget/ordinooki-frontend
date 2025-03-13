@@ -75,8 +75,21 @@
             display: none;
             border: 2px dotted #000000;
         }
+        /* New Loading Icon Style */
+        .loading-icon {
+            width: 40px;
+            height: 40px;
+            display: none; /* Hidden by default */
+            animation: coolSpin 1s linear infinite;
+            margin: 10px auto; /* Center it where the button was */
+        }
         @keyframes spin {
             100% { transform: rotate(360deg); }
+        }
+        @keyframes coolSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
         }
         .inscription-gallery {
             display: flex;
@@ -218,6 +231,11 @@
     <label for="address">Enter Your Ordinals Address:</label><br>
     <input type="text" id="address" placeholder="e.g., bc1p..."><br>
     <button id="checkButton" onclick="checkOwnership()">Check</button>
+    <!-- Custom Loading Icon (SVG) -->
+    <svg id="loadingIcon" class="loading-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="40" stroke="#8B4513" stroke-width="10" fill="none" />
+        <path d="M50 10 A40 40 0 0 1 90 50" stroke="#FF0000" stroke-width="10" fill="none" />
+    </svg>
     <div id="result">
         <img src="spin.png" alt="Loading..." class="spinner" id="spinner">
     </div>
@@ -275,7 +293,8 @@
             console.log('checkOwnership triggered');
             const address = document.getElementById('address').value.trim();
             const resultDiv = document.getElementById('result');
-            const spinner = document.getElementById('spinner');
+            const checkButton = document.getElementById('checkButton');
+            const loadingIcon = document.getElementById('loadingIcon');
 
             if (!address) {
                 resultDiv.innerHTML = "Please enter a valid Bitcoin address.";
@@ -297,8 +316,10 @@
             activeController = new AbortController();
             const { signal } = activeController;
 
+            // Hide button and show loading icon
+            checkButton.style.display = 'none';
+            loadingIcon.style.display = 'block';
             resultDiv.innerHTML = '';
-            if (spinner) spinner.style.display = 'inline-block';
             console.log(`Starting fetch for address: ${address}`);
 
             try {
@@ -318,8 +339,6 @@
 
                 const data = await response.json();
                 const tokens = data.tokens || [];
-
-                if (spinner) spinner.style.display = 'none';
 
                 if (tokens.length > 0) {
                     const ownershipText = document.createElement('span');
@@ -379,13 +398,15 @@
                 }
             } catch (error) {
                 if (error.name !== 'AbortError') {
-                    if (spinner) spinner.style.display = 'none';
                     resultDiv.innerHTML = `Error: ${error.message}`;
                     console.error('Fetch error:', error);
                 } else {
                     console.log('Request was aborted, ready for next check');
                 }
             } finally {
+                // Show button and hide loading icon, remove old spinner logic
+                checkButton.style.display = 'block';
+                loadingIcon.style.display = 'none';
                 activeController = null;
                 console.log('Request completed or aborted');
             }
@@ -404,7 +425,6 @@
                     spamOutput.appendChild(line);
                     count++;
                     
-                    // When we reach the 35th message, add the Twitter button
                     if (count === maxSpam) {
                         const twitterButton = document.createElement('button');
                         twitterButton.textContent = 'Follow Us';
