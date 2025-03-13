@@ -75,13 +75,12 @@
             display: none;
             border: 2px dotted #000000;
         }
-        /* New Loading Icon Style */
         .loading-icon {
             width: 40px;
             height: 40px;
-            display: none; /* Hidden by default */
+            display: none;
             animation: coolSpin 1s linear infinite;
-            margin: 10px auto; /* Center it where the button was */
+            margin: 10px auto;
         }
         @keyframes spin {
             100% { transform: rotate(360deg); }
@@ -115,7 +114,7 @@
         #mint-message {
             margin-top: 20px;
             font-size: 1em;
-            color: #00FF00; /* Changed to green */
+            color: #00FF00; /* Already green */
             font-weight: bold;
             border: 2px groove #000000;
             padding: 5px;
@@ -131,10 +130,9 @@
         }
         .checkmark {
             font-size: 1.5em;
-            color: #ff0000;
+            color: #00FF00; /* Changed to green */
             margin-left: 10px;
         }
-        /* Popup Styles (Success) */
         .popup-success {
             display: none;
             position: fixed;
@@ -150,19 +148,18 @@
             text-align: center;
         }
         .popup-content {
-            color: #00FF00; /* Changed to green */
+            color: #00FF00; /* Already green */
             font-family: 'Comic Sans MS', cursive;
             font-size: 2em;
             text-shadow: 2px 2px #000000;
         }
         .popup-checkmark {
             font-size: 4em;
-            color: #ff0000;
+            color: #00FF00; /* Changed to green */
             margin-top: 10px;
             display: inline-block;
             animation: bounceIn 0.8s ease-out;
         }
-        /* Popup Styles (Failure) */
         .popup-failure {
             display: none;
             position: fixed;
@@ -190,7 +187,6 @@
             display: inline-block;
             animation: shake 0.5s ease-in-out;
         }
-        /* Animations */
         @keyframes bounceIn {
             0% { transform: scale(0); opacity: 0; }
             50% { transform: scale(1.2); opacity: 1; }
@@ -343,10 +339,11 @@
                 if (tokens.length > 0) {
                     const ownershipText = document.createElement('span');
                     ownershipText.textContent = `You own ${tokens.length} Ordinookis inscription(s)!`;
+                    ownershipText.style.color = '#00FF00'; // Set to green
                     
                     const checkmark = document.createElement('span');
                     checkmark.textContent = '✔';
-                    checkmark.className = 'checkmark';
+                    checkmark.className = 'checkmark'; // Already green in CSS
                     
                     resultDiv.appendChild(ownershipText);
                     resultDiv.appendChild(checkmark);
