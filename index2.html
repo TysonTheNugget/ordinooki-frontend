@@ -52,23 +52,6 @@
             transform: translate(-50%, 0);
         }
         
-        /* Transition overlay */
-        #transition-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 9999;
-            transition: opacity 0.5s ease-in-out;
-        }
-        #transition-overlay.active {
-            opacity: 1;
-        }
-        
         @media (max-width: 768px) {
             .gif-container {
                 width: 100%;
@@ -93,19 +76,17 @@
     </style>
 </head>
 <body>
-    <div id="transition-overlay"></div>
     <div class="gif-container">
-        <img src="background.gif" class="gif-background" alt="background">
-        <div class="custom-button" onclick="fadeOutAndNavigate('index2.html')"></div>
+        <img src="background3.gif" class="gif-background" alt="background">
+        <div class="custom-button" onclick="fadeOutAndNavigate('checker.html')"></div>
     </div>
 
     <script>
         function fadeOutAndNavigate(url) {
-            const overlay = document.getElementById('transition-overlay');
-            overlay.classList.add('active'); // Fade to black
+            document.body.classList.add('fade-out');
             setTimeout(() => {
                 window.location.href = url;
-            }, 500); // Matches overlay transition duration
+            }, 1000); // Matches transition duration
         }
     </script>
 </body>
