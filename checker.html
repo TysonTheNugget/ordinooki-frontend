@@ -5,36 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check Ordinookis Ownership</title>
     <style>
+        /* Load DarkCastle font from local .otf file */
+        @font-face {
+            font-family: 'DarkCastle';
+            src: url('DarkCastle.otf') format('opentype');
+        }
         body {
-            font-family: 'Courier New', Courier, monospace;
-            max-width: 600px;
-            margin: 20px auto;
-            text-align: center;
-            background-image: url('background.gif');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'DarkCastle', 'Courier New', Courier, monospace;
             color: #ff0000;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            padding: 10px;
-            opacity: 0; /* Start invisible */
-            transition: opacity 0.5s ease-in-out; /* Fade in */
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
         }
         body.loaded {
-            opacity: 1; /* Fade in when loaded */
+            opacity: 1;
+        }
+        .gif-container {
+            position: relative;
+            width: 100%;
+            max-width: 1920px;
+            aspect-ratio: 16 / 12;
+            height: auto;
+            max-height: 100vh;
+            text-align: center;
+        }
+        .gif-background {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
         }
         h1 {
-            font-family: 'Comic Sans MS', cursive;
+            font-family: 'DarkCastle', 'Comic Sans MS', cursive;
             color: #ff0000;
             text-shadow: 2px 2px #000000;
             border: 4px double #000000;
             padding: 10px;
             background-color: rgba(0,0,128,0.5);
             font-size: 2em;
+            margin: 20px auto;
         }
         label {
             font-size: 1.2em;
+            background-color: rgba(0,0,128,0.7);
+            padding: 8px 12px;
+            border: 3px ridge #000000;
+            border-radius: 5px;
+            display: inline-block;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         input {
             padding: 8px;
@@ -44,7 +73,7 @@
             margin: 10px 0;
             background-color: #c0c0c0;
             border: 2px inset #ffffff;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'DarkCastle', 'Courier New', Courier, monospace;
             box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             box-sizing: border-box;
             color: #ff0000;
@@ -56,7 +85,7 @@
             margin: 10px;
             background-color: #c0c0c0;
             border: 2px outset #ffffff;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'DarkCastle', 'Courier New', Courier, monospace;
             box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             color: #ff0000;
         }
@@ -154,7 +183,7 @@
         }
         .popup-content {
             color: #00FF00;
-            font-family: 'Comic Sans MS', cursive;
+            font-family: 'DarkCastle', 'Comic Sans MS', cursive;
             font-size: 2em;
             text-shadow: 2px 2px #000000;
         }
@@ -181,7 +210,7 @@
         }
         .popup-failure-content {
             color: #ff0000;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'DarkCastle', 'Courier New', Courier, monospace;
             font-size: 1.5em;
             text-shadow: 1px 1px #000000;
         }
@@ -192,7 +221,6 @@
             display: inline-block;
             animation: shake 0.5s ease-in-out;
         }
-        /* Transition overlay */
         #transition-overlay {
             position: fixed;
             top: 0;
@@ -200,7 +228,7 @@
             width: 100%;
             height: 100%;
             background: #000;
-            opacity: 1; /* Start visible */
+            opacity: 1;
             pointer-events: none;
             z-index: 9999;
             transition: opacity 0.5s ease-in-out;
@@ -226,6 +254,20 @@
             75% { transform: translateX(-5px); }
             100% { transform: translateX(0); }
         }
+        @media (max-width: 768px) {
+            .gif-container {
+                width: 100%;
+                max-width: 1920px;
+                aspect-ratio: 16 / 9;
+                height: auto;
+                max-height: 100vh;
+            }
+            .gif-background {
+                object-fit: fill;
+                width: 100%;
+                height: 100%;
+            }
+        }
         @media (max-width: 600px) {
             h1 { font-size: 1.5em; }
             label { font-size: 1em; }
@@ -245,17 +287,19 @@
 </head>
 <body>
     <div id="transition-overlay"></div>
-    <h1>Whitelist Status Check</h1>
-    <label for="address">Please Enter Your Ordinals Address:</label><br>
-    <input type="text" id="address" placeholder="e.g., bc1p..."><br>
-    <button id="checkButton" onclick="checkOwnership()">Check</button>
-    <!-- Custom Loading Icon (SVG) -->
-    <svg id="loadingIcon" class="loading-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="40" stroke="#8B4513" stroke-width="10" fill="none" />
-        <path d="M50 10 A40 40 0 0 1 90 50" stroke="#FF0000" stroke-width="10" fill="none" />
-    </svg>
-    <div id="result">
-        <img src="spin.png" alt="Loading..." class="spinner" id="spinner">
+    <div class="gif-container">
+        <img src="background.gif" class="gif-background" alt="background">
+        <h1>Whitelist Status Check</h1>
+        <label for="address">Please Enter Your Ordinals Address:</label><br>
+        <input type="text" id="address" placeholder="e.g., bc1p..."><br>
+        <button id="checkButton" onclick="checkOwnership()">Check</button>
+        <svg id="loadingIcon" class="loading-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="40" stroke="#8B4513" stroke-width="10" fill="none" />
+            <path d="M50 10 A40 40 0 0 1 90 50" stroke="#FF0000" stroke-width="10" fill="none" />
+        </svg>
+        <div id="result">
+            <img src="spin.png" alt="Loading..." class="spinner" id="spinner">
+        </div>
     </div>
 
     <!-- Success Popup -->
@@ -275,13 +319,12 @@
     <audio id="failureSound" src="https://cdn.pixabay.com/audio/2023/08/23/14-36-05-789_1.mp3"></audio>
 
     <script>
-        // Fade in page and hide overlay when loaded
         window.addEventListener('load', () => {
             document.body.classList.add('loaded');
             const overlay = document.getElementById('transition-overlay');
             setTimeout(() => {
                 overlay.classList.add('hidden');
-            }, 50); // Small delay to ensure body fade starts
+            }, 50);
         });
 
         let activeController = null;
