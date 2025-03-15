@@ -18,6 +18,11 @@
             color: #ff0000;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
             padding: 10px;
+            opacity: 0; /* Start invisible */
+            transition: opacity 0.5s ease-in-out; /* Fade in */
+        }
+        body.loaded {
+            opacity: 1; /* Fade in when loaded */
         }
         h1 {
             font-family: 'Comic Sans MS', cursive;
@@ -114,7 +119,7 @@
         #mint-message {
             margin-top: 20px;
             font-size: 1em;
-            color: #00FF00; /* Already green */
+            color: #00FF00;
             font-weight: bold;
             border: 2px groove #000000;
             padding: 5px;
@@ -130,7 +135,7 @@
         }
         .checkmark {
             font-size: 1.5em;
-            color: #00FF00; /* Changed to green */
+            color: #00FF00;
             margin-left: 10px;
         }
         .popup-success {
@@ -148,14 +153,14 @@
             text-align: center;
         }
         .popup-content {
-            color: #00FF00; /* Already green */
+            color: #00FF00;
             font-family: 'Comic Sans MS', cursive;
             font-size: 2em;
             text-shadow: 2px 2px #000000;
         }
         .popup-checkmark {
             font-size: 4em;
-            color: #00FF00; /* Changed to green */
+            color: #00FF00;
             margin-top: 10px;
             display: inline-block;
             animation: bounceIn 0.8s ease-out;
@@ -186,6 +191,22 @@
             margin-top: 10px;
             display: inline-block;
             animation: shake 0.5s ease-in-out;
+        }
+        /* Transition overlay */
+        #transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 1; /* Start visible */
+            pointer-events: none;
+            z-index: 9999;
+            transition: opacity 0.5s ease-in-out;
+        }
+        #transition-overlay.hidden {
+            opacity: 0;
         }
         @keyframes bounceIn {
             0% { transform: scale(0); opacity: 0; }
@@ -223,6 +244,7 @@
     </style>
 </head>
 <body>
+    <div id="transition-overlay"></div>
     <h1>Whitelist Status Check</h1>
     <label for="address">Please Enter Your Ordinals Address:</label><br>
     <input type="text" id="address" placeholder="e.g., bc1p..."><br>
@@ -249,13 +271,21 @@
     </div>
 
     <!-- Audio Elements -->
-    <audio id="successSound" src="https://cdn.pixabay.com/audio/2022/03/10/13-12-23-760_1.mp3"></audio> <!-- Zelda-type success -->
-    <audio id="failureSound" src="https://cdn.pixabay.com/audio/2023/08/23/14-36-05-789_1.mp3"></audio> <!-- Error sound -->
+    <audio id="successSound" src="https://cdn.pixabay.com/audio/2022/03/10/13-12-23-760_1.mp3"></audio>
+    <audio id="failureSound" src="https://cdn.pixabay.com/audio/2023/08/23/14-36-05-789_1.mp3"></audio>
 
     <script>
+        // Fade in page and hide overlay when loaded
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+            const overlay = document.getElementById('transition-overlay');
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 50); // Small delay to ensure body fade starts
+        });
+
         let activeController = null;
 
-        // Function to show success popup with Zelda sound
         function showCongratsPopup() {
             console.log('showCongratsPopup called');
             const popup = document.getElementById('congratsPopup');
@@ -270,7 +300,6 @@
             }, 3000);
         }
 
-        // Function to show failure popup with error sound
         function showSorryPopup() {
             console.log('showSorryPopup called');
             const popup = document.getElementById('sorryPopup');
@@ -312,7 +341,6 @@
             activeController = new AbortController();
             const { signal } = activeController;
 
-            // Hide button and show loading icon
             checkButton.style.display = 'none';
             loadingIcon.style.display = 'block';
             resultDiv.innerHTML = '';
@@ -339,11 +367,11 @@
                 if (tokens.length > 0) {
                     const ownershipText = document.createElement('span');
                     ownershipText.textContent = `You own ${tokens.length} Ordinookis inscription(s)!`;
-                    ownershipText.style.color = '#00FF00'; // Set to green
+                    ownershipText.style.color = '#00FF00';
                     
                     const checkmark = document.createElement('span');
                     checkmark.textContent = '✔';
-                    checkmark.className = 'checkmark'; // Already green in CSS
+                    checkmark.className = 'checkmark';
                     
                     resultDiv.appendChild(ownershipText);
                     resultDiv.appendChild(checkmark);
@@ -383,14 +411,11 @@
                     spamOutput.id = 'spam-output';
                     resultDiv.appendChild(spamOutput);
 
-                    // Show success popup
                     showCongratsPopup();
-
                     console.log(`Displayed ${tokens.length} inscriptions`);
                 } else {
                     resultDiv.innerHTML = "You don't own any Ordinookis inscriptions.";
                     console.log('No inscriptions found');
-                    // Show failure popup
                     showSorryPopup();
                 }
             } catch (error) {
@@ -401,7 +426,6 @@
                     console.log('Request was aborted, ready for next check');
                 }
             } finally {
-                // Show button and hide loading icon
                 checkButton.style.display = 'block';
                 loadingIcon.style.display = 'none';
                 activeController = null;
