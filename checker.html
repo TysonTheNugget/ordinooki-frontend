@@ -19,7 +19,7 @@
             justify-content: center;
             align-items: center;
             font-family: 'DarkCastle', 'Courier New', Courier, monospace;
-            color: #00FF00; /* Changed to green */
+            color: #00FF00;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
@@ -51,7 +51,7 @@
         }
         h1 {
             font-family: 'DarkCastle', 'Comic Sans MS', cursive;
-            color: #00FF00; /* Changed to green */
+            color: #00FF00;
             text-shadow: 2px 2px #000000;
             border: 4px double #000000;
             padding: 10px;
@@ -70,7 +70,7 @@
             border-radius: 5px;
             display: inline-block;
             box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            color: #00FF00; /* Changed to green (inherited from body, but explicit for clarity) */
+            color: #00FF00;
         }
         input {
             padding: 8px;
@@ -83,7 +83,7 @@
             font-family: 'DarkCastle', 'Courier New', Courier, monospace;
             box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             box-sizing: border-box;
-            color: #00FF00; /* Changed to green */
+            color: #00FF00;
             letter-spacing: 1px;
         }
         button {
@@ -95,11 +95,14 @@
             border: 2px outset #ffffff;
             font-family: 'DarkCastle', 'Courier New', Courier, monospace;
             box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            color: #00FF00; /* Changed to green */
+            color: #00FF00;
         }
         button:hover {
             background-color: #d0d0d0;
             border: 2px inset #ffffff;
+        }
+        #checkButton {
+            color: #000000; /* "Check" button text set to black */
         }
         #result {
             margin-top: 20px;
@@ -112,7 +115,7 @@
             max-width: 600px;
             width: auto;
             display: inline-block;
-            color: #00FF00; /* Changed to green (inherited from body, but explicit for clarity) */
+            color: #00FF00;
         }
         .spinner {
             width: 50px;
@@ -154,13 +157,13 @@
         .inscription-item p {
             margin: 5px 0;
             font-size: 0.9em;
-            color: #00FF00; /* Changed to green */
+            color: #00FF00;
             border-bottom: 1px dashed #000000;
         }
         #mint-message {
             margin-top: 20px;
             font-size: 1em;
-            color: #00FF00; /* Already green */
+            color: #00FF00;
             font-weight: bold;
             border: 2px groove #000000;
             padding: 5px;
@@ -170,13 +173,13 @@
         #spam-output {
             margin-top: 10px;
             font-size: 0.9em;
-            color: #00FF00; /* Changed to green */
+            color: #00FF00;
             border: 2px dashed #000000;
             padding: 5px;
         }
         .checkmark {
             font-size: 1.5em;
-            color: #00FF00; /* Already green */
+            color: #00FF00;
             margin-left: 10px;
         }
         .popup-success {
@@ -194,14 +197,14 @@
             text-align: center;
         }
         .popup-content {
-            color: #00FF00; /* Already green */
+            color: #00FF00;
             font-family: 'DarkCastle', 'Comic Sans MS', cursive;
             font-size: 2em;
             text-shadow: 2px 2px #000000;
         }
         .popup-checkmark {
             font-size: 4em;
-            color: #00FF00; /* Already green */
+            color: #00FF00;
             margin-top: 10px;
             display: inline-block;
             animation: bounceIn 0.8s ease-out;
@@ -221,14 +224,14 @@
             text-align: center;
         }
         .popup-failure-content {
-            color: #00FF00; /* Changed to green */
+            color: #00FF00;
             font-family: 'DarkCastle', 'Courier New', Courier, monospace;
             font-size: 1.5em;
             text-shadow: 1px 1px #000000;
         }
         .popup-x {
             font-size: 4em;
-            color: #00FF00; /* Changed to green */
+            color: #00FF00;
             margin-top: 10px;
             display: inline-block;
             animation: shake 0.5s ease-in-out;
@@ -422,7 +425,7 @@
                 if (tokens.length > 0) {
                     const ownershipText = document.createElement('span');
                     ownershipText.textContent = `You own ${tokens.length} Ordinookis inscription(s)!`;
-                    ownershipText.style.color = '#00FF00'; /* Already green */
+                    ownershipText.style.color = '#00FF00';
                     
                     const checkmark = document.createElement('span');
                     checkmark.textContent = '✔';
@@ -504,6 +507,7 @@
                     if (count === 7) {
                         const twitterButton = document.createElement('button');
                         twitterButton.textContent = 'Follow Us';
+                        twitterButton.style.color = '#000000'; /* "Follow Us" text set to black */
                         twitterButton.onclick = () => {
                             window.open('https://x.com/mempoolshadows', '_blank');
                         };
