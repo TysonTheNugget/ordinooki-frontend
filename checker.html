@@ -491,7 +491,7 @@
             spamOutput.innerHTML = '';
 
             let count = 0;
-            const maxSpam = 14;
+            const maxSpam = 7;
             const interval = setInterval(() => {
                 if (count < maxSpam) {
                     const line = document.createElement('p');
@@ -499,7 +499,7 @@
                     spamOutput.appendChild(line);
                     count++;
                     
-                    if (count === 14) {
+                    if (count === 7) {
                         const twitterButton = document.createElement('button');
                         twitterButton.textContent = 'Follow Us';
                         twitterButton.onclick = () => {
