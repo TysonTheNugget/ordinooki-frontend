@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .fade-out {
+            opacity: 0;
+        }
+
+        .gif-container {
+            position: relative;
+            width: 100%;
+            max-width: 1920px;
+            aspect-ratio: 16 / 12;
+            height: auto;
+            max-height: 100vh;
+        }
+        
+        .gif-background {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            animation: play 1.6s steps(10) infinite;
+        }
+        
+        @keyframes play {
+            from { opacity: 1; }
+            to { opacity: 1; }
+        }
+        
+        .custom-button {
+            position: absolute;
+            width: 5%;
+            height: 8%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            z-index: 1;
+            bottom: 1%;
+            left: 30%;
+            transform: translate(-50%, 0);
+        }
+        
+        /* Transition overlay */
+        #transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transition: opacity 0.5s ease-in-out;
+        }
+        #transition-overlay.active {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .gif-container {
+                width: 100%;
+                max-width: 1920px;
+                aspect-ratio: 16 / 9;
+                height: auto;
+                max-height: 100vh;
+            }
+            .gif-background {
+                object-fit: fill;
+                width: 100%;
+                height: 100%;
+            }
+            .custom-button {
+                width: 10%;
+                height: 8%;
+                bottom: 5%;
+                left: 37%;
+                transform: translate(-50%, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="transition-overlay"></div>
+    <div class="gif-container">
+        <img src="background4.gif" class="gif-background" alt="background">
+        <div class="custom-button" onclick="fadeOutAndNavigate('index2.html')"></div>
+    </div>
+
+    <script>
+        function fadeOutAndNavigate(url) {
+            const overlay = document.getElementById('transition-overlay');
+            overlay.classList.add('active'); // Fade to black
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500); // Matches overlay transition duration
+        }
+    </script>
+</body>
+</html>
