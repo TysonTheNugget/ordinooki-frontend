@@ -105,7 +105,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(0,0,128,0.7); /* Matches other text backgrounds */
+            background-color: rgba(0,0,128,0.7);
             padding: 15px;
             border: 4px double #000000;
             border-radius: 10px;
@@ -116,8 +116,26 @@
             max-height: 80vh;
             overflow-y: auto;
             text-align: center;
-            animation: popupFadeIn 0.5s ease-out; /* Smoother animation */
-            font-family: 'DarkCastle', 'Courier New', Courier, monospace; /* Matches page font */
+            animation: popupFadeIn 0.5s ease-out;
+            font-family: 'DarkCastle', 'Courier New', Courier, monospace;
+        }
+        .success-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0,0,128,0.7); /* Matches checker text background */
+            padding: 20px;
+            border: 4px double #000000;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            z-index: 1001;
+            width: 90%;
+            max-width: 300px;
+            text-align: center;
+            animation: popupFadeIn 0.5s ease-out;
+            font-family: 'DarkCastle', 'Courier New', Courier, monospace;
         }
         .popup-title {
             font-size: clamp(1.3em, 4vw, 1.8em);
@@ -130,6 +148,10 @@
             margin-bottom: 15px;
             line-height: 1.4;
             word-wrap: break-word;
+        }
+        .success-message {
+            font-size: clamp(1em, 3vw, 1.2em);
+            margin-bottom: 15px;
         }
         input, button {
             padding: 6px;
@@ -175,11 +197,11 @@
         @keyframes popupFadeIn {
             from { 
                 opacity: 0; 
-                transform: translate(-50%, -50%) scale(0.8); /* Start slightly smaller */
+                transform: translate(-50%, -50%) scale(0.8);
             }
             to { 
                 opacity: 1; 
-                transform: translate(-50%, -50%) scale(1); /* Grow to full size */
+                transform: translate(-50%, -50%) scale(1);
             }
         }
         @media (max-width: 768px) {
@@ -192,7 +214,7 @@
                 width: 100%;
                 height: 100%;
             }
-            .popup {
+            .popup, .success-popup {
                 width: 85%;
                 padding: 10px;
             }
@@ -205,7 +227,7 @@
                 padding: 6px;
                 margin: 5px 0;
             }
-            .popup {
+            .popup, .success-popup {
                 width: 90%;
                 max-height: 70vh;
                 padding: 8px;
@@ -240,6 +262,11 @@
                 <button type="submit">Submit Quest</button>
                 <input type="hidden" name="subject" value="New Quest Submission">
             </form>
+        </div>
+
+        <div id="successPopup" class="success-popup">
+            <div class="success-message">Quest Submitted Successfully!</div>
+            <button onclick="window.open('https://x.com/mempoolshadows', '_blank')">Follow Us</button>
         </div>
     </div>
 
@@ -288,8 +315,23 @@
             });
         }
 
+        function showSuccessPopup() {
+            const successPopup = document.getElementById('successPopup');
+            successPopup.style.display = 'block';
+            setTimeout(() => {
+                successPopup.style.display = 'none';
+            }, 3000); // Hide after 3 seconds
+
+            document.addEventListener('click', function closeSuccessPopup(e) {
+                if (!successPopup.contains(e.target)) {
+                    successPopup.style.display = 'none';
+                    document.removeEventListener('click', closeSuccessPopup);
+                }
+            });
+        }
+
         document.getElementById('questForm').addEventListener('submit', async function(e) {
-            e.preventDefault(); // Prevent default form submission
+            e.preventDefault();
 
             const form = e.target;
             const formData = new FormData(form);
@@ -303,7 +345,7 @@
                 if (response.ok) {
                     document.getElementById('questPopup').style.display = 'none';
                     form.reset();
-                    alert('Quest submitted successfully!');
+                    showSuccessPopup(); // Show custom success popup
                 } else {
                     alert('Something went wrong. Please try again.');
                 }
