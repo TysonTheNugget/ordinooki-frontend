@@ -125,7 +125,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(0,0,128,0.7); /* Matches checker text background */
+            background-color: rgba(0,0,128,0.7);
             padding: 20px;
             border: 4px double #000000;
             border-radius: 10px;
@@ -255,7 +255,7 @@
             <div id="popupTitle" class="popup-title"></div>
             <div id="popupTask" class="popup-task"></div>
             <form id="questForm" action="https://api.web3forms.com/submit" method="POST">
-                <input type="hidden" name="access_key" value="faaf7112-1dc5-4364-aa08-4eeb4b2d7033">
+                <input type="hidden" name="access_key" value="ac8f9993-55e2-4ca1-a1e8-e101f092908f">
                 <input type="text" name="x_account" placeholder="Your X Handle (e.g., @mempoolshadows)" required><br>
                 <input type="text" name="ordinals_address" placeholder="Your Ordinals Address (e.g., bc1p...)" required><br>
                 <input type="url" name="post_link" placeholder="Link to Your X Post (e.g., https://x.com/...)" required><br>
@@ -267,6 +267,7 @@
         <div id="successPopup" class="success-popup">
             <div class="success-message">Quest Submitted Successfully!</div>
             <button onclick="window.open('https://x.com/mempoolshadows', '_blank')">Follow Us</button>
+            <button onclick="document.getElementById('successPopup').style.display = 'none'">OK</button>
         </div>
     </div>
 
@@ -318,16 +319,7 @@
         function showSuccessPopup() {
             const successPopup = document.getElementById('successPopup');
             successPopup.style.display = 'block';
-            setTimeout(() => {
-                successPopup.style.display = 'none';
-            }, 3000); // Hide after 3 seconds
-
-            document.addEventListener('click', function closeSuccessPopup(e) {
-                if (!successPopup.contains(e.target)) {
-                    successPopup.style.display = 'none';
-                    document.removeEventListener('click', closeSuccessPopup);
-                }
-            });
+            // Removed auto-hide timeout to make it persistent
         }
 
         document.getElementById('questForm').addEventListener('submit', async function(e) {
@@ -345,7 +337,7 @@
                 if (response.ok) {
                     document.getElementById('questPopup').style.display = 'none';
                     form.reset();
-                    showSuccessPopup(); // Show custom success popup
+                    showSuccessPopup();
                 } else {
                     alert('Something went wrong. Please try again.');
                 }
