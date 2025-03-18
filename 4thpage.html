@@ -225,12 +225,13 @@
         <div id="questPopup" class="popup">
             <div id="popupTitle" class="popup-title"></div>
             <div id="popupTask" class="popup-task"></div>
-            <form id="questForm" action="https://formsubmit.co/mempoolshadowsbtc@gmail.com" method="POST">
+            <form id="questForm" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="faaf7112-1dc5-4364-aa08-4eeb4b2d7033">
                 <input type="text" name="x_account" placeholder="Your X Handle (e.g., @mempoolshadows)" required><br>
                 <input type="text" name="ordinals_address" placeholder="Your Ordinals Address (e.g., bc1p...)" required><br>
                 <button type="submit">Submit Quest</button>
-                <input type="hidden" name="_subject" value="New Quest Submission">
-                <input type="hidden" name="_next" value="https://your-domain.com/thank-you.html">
+                <input type="hidden" name="subject" value="New Quest Submission">
+                <input type="hidden" name="redirect" value="https://your-domain.com/thank-you.html">
             </form>
         </div>
     </div>
