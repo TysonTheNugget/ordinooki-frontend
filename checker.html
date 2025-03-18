@@ -521,7 +521,11 @@
         }
 
         function goToQuests() {
-            window.location.href = '4thpage.html';
+            const overlay = document.getElementById('transition-overlay');
+            overlay.classList.remove('hidden'); // Fade out by showing overlay
+            setTimeout(() => {
+                window.location.href = '4thpage.html'; // Navigate after fade out
+            }, 500); // Match the transition duration (0.5s)
         }
     </script>
 </body>
