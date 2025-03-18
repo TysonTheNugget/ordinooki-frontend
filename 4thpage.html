@@ -105,7 +105,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(0,0,128,0.9);
+            background-color: rgba(0,0,128,0.7); /* Matches other text backgrounds */
             padding: 15px;
             border: 4px double #000000;
             border-radius: 10px;
@@ -116,7 +116,8 @@
             max-height: 80vh;
             overflow-y: auto;
             text-align: center;
-            animation: popupFadeIn 0.3s ease-in-out;
+            animation: popupFadeIn 0.5s ease-out; /* Smoother animation */
+            font-family: 'DarkCastle', 'Courier New', Courier, monospace; /* Matches page font */
         }
         .popup-title {
             font-size: clamp(1.3em, 4vw, 1.8em);
@@ -172,8 +173,14 @@
             opacity: 0;
         }
         @keyframes popupFadeIn {
-            from { opacity: 0; transform: translate(-50%, -60%); }
-            to { opacity: 1; transform: translate(-50%, -50%); }
+            from { 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.8); /* Start slightly smaller */
+            }
+            to { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1); /* Grow to full size */
+            }
         }
         @media (max-width: 768px) {
             .gif-container {
@@ -226,9 +233,10 @@
             <div id="popupTitle" class="popup-title"></div>
             <div id="popupTask" class="popup-task"></div>
             <form id="questForm" action="https://api.web3forms.com/submit" method="POST">
-                <input type="hidden" name="access_key" value="ac8f9993-55e2-4ca1-a1e8-e101f092908f">
+                <input type="hidden" name="access_key" value="faaf7112-1dc5-4364-aa08-4eeb4b2d7033">
                 <input type="text" name="x_account" placeholder="Your X Handle (e.g., @mempoolshadows)" required><br>
                 <input type="text" name="ordinals_address" placeholder="Your Ordinals Address (e.g., bc1p...)" required><br>
+                <input type="url" name="post_link" placeholder="Link to Your X Post (e.g., https://x.com/...)" required><br>
                 <button type="submit">Submit Quest</button>
                 <input type="hidden" name="subject" value="New Quest Submission">
             </form>
@@ -293,10 +301,9 @@
                 });
 
                 if (response.ok) {
-                    // Hide the popup and reset the form
                     document.getElementById('questPopup').style.display = 'none';
                     form.reset();
-                    alert('Quest submitted successfully!'); // Optional feedback
+                    alert('Quest submitted successfully!');
                 } else {
                     alert('Something went wrong. Please try again.');
                 }
