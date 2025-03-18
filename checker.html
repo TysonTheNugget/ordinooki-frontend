@@ -101,8 +101,8 @@
             background-color: #d0d0d0;
             border: 2px inset #ffffff;
         }
-        #checkButton {
-            color: #000000; /* "Check" button text set to black */
+        #checkButton, #questsButton {
+            color: #000000; /* "Check" and "Quests" button text set to black */
         }
         #result {
             margin-top: 20px;
@@ -308,6 +308,7 @@
         <label for="address">Please Enter Your Ordinals Address:</label><br>
         <input type="text" id="address" placeholder="e.g., bc1p..."><br>
         <button id="checkButton" onclick="checkOwnership()">Check</button>
+        <button id="questsButton" onclick="goToQuests()">Quests</button>
         <svg id="loadingIcon" class="loading-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <circle cx="50" cy="50" r="40" stroke="#8B4513" stroke-width="10" fill="none" />
             <path d="M50 10 A40 40 0 0 1 90 50" stroke="#FF0000" stroke-width="10" fill="none" />
@@ -517,6 +518,10 @@
                     }
                 }
             }, 200);
+        }
+
+        function goToQuests() {
+            window.location.href = '4thpage.html';
         }
     </script>
 </body>
